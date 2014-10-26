@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :attendees
 
-  root "meetup/index"
   namespace :admin do
     resources :categories
     resources :meetups do
@@ -18,6 +16,7 @@ Rails.application.routes.draw do
   resources :notes
   resources :images
   resources :reviews
+  resources :attendees
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
