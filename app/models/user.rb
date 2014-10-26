@@ -7,5 +7,8 @@ class User < ActiveRecord::Base
   has_many :meetup_members
   has_many :meetups, as: :meetable, through: :meetup_members
 
+  has_many :attendees
+  has_many :events, through: :attendees
+  
   has_many :review, as: :reviewable
 end
