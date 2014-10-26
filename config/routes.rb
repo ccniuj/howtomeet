@@ -1,4 +1,26 @@
 Rails.application.routes.draw do
+  
+  root 'pages#index'
+  
+  namespace :admin do
+    resources :categories
+    resources :meetups do
+      resources :events
+    end
+    resources :notes
+    resources :images
+  end
+
+  resources :categories
+  resources :meetups do
+    resources :events
+  end
+  resources :notes
+  resources :images
+  resources :reviews
+  resources :attendees
+
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
