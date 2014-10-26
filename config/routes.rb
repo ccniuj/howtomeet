@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :images
+  end
+
+  resources :images
+
+  namespace :admin do
     resources :notes
   end
 
