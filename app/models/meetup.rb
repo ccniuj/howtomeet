@@ -1,4 +1,4 @@
 class Meetup < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :meetable, polymorphic: true
   has_many :events
 end
