@@ -1,35 +1,18 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :categories
+    resources :meetups
+    resources :events
+    resources :notes
     resources :images
   end
 
-  resources :images
-
-  namespace :admin do
-    resources :notes
-  end
-
-  resources :notes
-
-  resources :reviews
-
-  namespace :admin do
-    resources :categories
-  end
-
   resources :categories
-
-  namespace :admin do
-    resources :events
-  end
-
-  namespace :admin do
-    resources :meetups
-  end
-
-  resources :events
-
   resources :meetups
+  resources :events
+  resources :notes
+  resources :images
+  resources :reviews
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
