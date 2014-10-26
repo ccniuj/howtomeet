@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-
+  
+  root 'pages#index'
+  
   namespace :admin do
     resources :categories
     resources :meetups do
