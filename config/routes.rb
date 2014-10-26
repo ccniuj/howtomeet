@@ -1,15 +1,18 @@
 Rails.application.routes.draw do
+  root "meetup/index"
   namespace :admin do
     resources :categories
-    resources :meetups
-    resources :events
+    resources :meetups do
+      resources :events
+    end
     resources :notes
     resources :images
   end
 
   resources :categories
-  resources :meetups
-  resources :events
+  resources :meetups do
+    resources :events
+  end
   resources :notes
   resources :images
   resources :reviews
