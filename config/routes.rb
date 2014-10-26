@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :events
+  end
+
+  namespace :admin do
+    resources :meetups
+  end
+
+  resources :events
+
+  resources :meetups
+
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
