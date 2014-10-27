@@ -31,6 +31,8 @@ class Admin::MeetupsController < ApplicationController
     # binding.pry
     respond_to do |format|
       if @admin_meetup.save
+        add_meetup_member(@admin_meetup, current_user)
+
         format.html { redirect_to @admin_meetup, notice: '成功建立聚會' }
         format.json { render :show, status: :created, location: @admin_meetup }
       else
@@ -66,6 +68,11 @@ class Admin::MeetupsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def add_meetup_member(meetup, user)
+      MeetupMember.create(meetup_id: meetup.id, user_id: user.id, is_owner: true)
+    end
+
     def set_admin_meetup
       @admin_meetup = Meetup.find(params[:id])
     end
