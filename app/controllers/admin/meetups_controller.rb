@@ -1,10 +1,11 @@
 class Admin::MeetupsController < ApplicationController
   before_action :set_admin_meetup, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  
   # GET /admin/meetups
   # GET /admin/meetups.json
   def index
-    @admin_meetups = Admin::Meetup.all
+    @admin_meetups = Meetup.all
   end
 
   # GET /admin/meetups/1
@@ -14,7 +15,7 @@ class Admin::MeetupsController < ApplicationController
 
   # GET /admin/meetups/new
   def new
-    @admin_meetup = Admin::Meetup.new
+    @admin_meetup = Meetup.new
   end
 
   # GET /admin/meetups/1/edit
@@ -24,7 +25,7 @@ class Admin::MeetupsController < ApplicationController
   # POST /admin/meetups
   # POST /admin/meetups.json
   def create
-    @admin_meetup = Admin::Meetup.new(admin_meetup_params)
+    @admin_meetup = Meetup.new(admin_meetup_params)
 
     respond_to do |format|
       if @admin_meetup.save
@@ -64,7 +65,7 @@ class Admin::MeetupsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_meetup
-      @admin_meetup = Admin::Meetup.find(params[:id])
+      @admin_meetup = Meetup.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
