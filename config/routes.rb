@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :categories
   resources :meetups do
+    get 'find', on: :member
     resources :events
   end
   resources :notes

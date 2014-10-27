@@ -1,4 +1,35 @@
-<p id="notice"><%= notice %></p>
+<h1 class="text-center"><%= @meetup.title %></h1>
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <%= image_tag @meetup.cover.url, style: "width: 100%;" %>
+    <%= link_to "簡介", anchor: "about" %>
+    <%= link_to "成員", anchor: "member" %>
+    <%= link_to "活動", anchor: "event" %>
+    <%= link_to "筆記", anchor: "note" %>
+    <%= link_to "照片", anchor: "photo" %>
 
-<%= link_to 'Edit', edit_meetup_path(@meetup) %> |
-<%= link_to 'Back', meetups_path %>
+    <div id="about">
+      <h3>簡介</h3>
+      <p>
+        <%= @meetup.description %><br/>
+        <%= @meetup.day %><br/>
+        <%= @meetup.location %>
+      </p>
+    </div>
+    <div id="member">
+      <h3>成員</h3>
+      <% @members.each do |member| %>
+        <%= member.email %>
+      <% end %>
+    </div>
+    <div id="event">
+      <h3>活動</h3>
+    </div>
+    <div id="note">
+      <h3>筆記</h3>
+    </div>
+    <div id="photo">
+      <h3>照片</h3>
+    </div>
+  </div>
+</div>
