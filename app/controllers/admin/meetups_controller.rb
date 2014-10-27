@@ -26,10 +26,11 @@ class Admin::MeetupsController < ApplicationController
   # POST /admin/meetups.json
   def create
     @admin_meetup = Meetup.new(admin_meetup_params)
-
+    @admin_meetup.cover = params[:meetup][:cover]
+    # binding.pry
     respond_to do |format|
       if @admin_meetup.save
-        format.html { redirect_to @admin_meetup, notice: 'Meetup was successfully created.' }
+        format.html { redirect_to @admin_meetup, notice: '成功建立聚會' }
         format.json { render :show, status: :created, location: @admin_meetup }
       else
         format.html { render :new }
@@ -70,6 +71,6 @@ class Admin::MeetupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_meetup_params
-      params[:admin_meetup]
+      params[:meetup].permit(:title, :subtitle, :description, :location, :day, :called, :file)
     end
 end

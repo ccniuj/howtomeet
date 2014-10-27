@@ -8,4 +8,11 @@ class Meetup < ActiveRecord::Base
   has_many :review, as: :reviewable
 
   mount_uploader :cover, CoverUploader
+
+  validates :title, :presence => "true"
+  validates :description, :presence => "true"
+  validates :location, :presence => "true"
+  validates :day, :presence => "true"
+  validates_presence_of :cover
+
 end
