@@ -1,6 +1,11 @@
-<%= form_for(@admin_meetup) do |f| %>
-
-  <div class="actions">
-    <%= f.submit %>
+<%= simple_form_for [:admin, @admin_meetup] do |f| %>
+  <div class="form-group">
+    <%= f.input :title, :label => "聚會名稱", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :subtitle, :label => "副標", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :description, :label => "簡介", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :location, :label => "所在地", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :day, :label => "例行日", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :called, :label => "參加者別稱", :input_html => {:class => "form-control"} %></br>
   </div>
+  <%= f.submit "建立聚會", :class => "btn btn-success" %>
 <% end %>
