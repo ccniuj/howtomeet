@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20141026120121) do
     t.integer  "day"
     t.string   "location"
     t.string   "called"
+    t.string   "cover"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

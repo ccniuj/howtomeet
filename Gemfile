@@ -40,3 +40,8 @@ gem 'spring',        group: :development
 
 gem 'devise'
 gem 'quiet_assets'
+gem 'autoprefixer-rails'
+gem 'bootstrap-sass'
+gem 'pry'
+gem 'simple_form'
+gem 'carrierwave'
