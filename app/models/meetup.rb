@@ -6,4 +6,6 @@ class Meetup < ActiveRecord::Base
   has_many :events
 
   has_many :review, as: :reviewable
+
+  mount_uploader :cover, CoverUploader
 end

@@ -8,6 +8,7 @@ class CreateMeetups < ActiveRecord::Migration
       t.integer :day
       t.string :location
       t.string :called
+      t.string :cover
       
       t.timestamps
     end
