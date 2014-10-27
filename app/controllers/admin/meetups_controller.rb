@@ -16,6 +16,7 @@ class Admin::MeetupsController < ApplicationController
   # GET /admin/meetups/new
   def new
     @admin_meetup = Meetup.new
+    @categories = Category.all
   end
 
   # GET /admin/meetups/1/edit
@@ -71,6 +72,6 @@ class Admin::MeetupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_meetup_params
-      params[:meetup].permit(:title, :subtitle, :description, :location, :day, :called, :file)
+      params[:meetup].permit(:title, :subtitle, :category_id, :description, :location, :day, :called, :file)
     end
 end

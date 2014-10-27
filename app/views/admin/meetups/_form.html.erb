@@ -2,6 +2,7 @@
   <div class="form-group">
     <%= f.input :title, :label => "聚會名稱", :input_html => {:class => "form-control"} %></br>
     <%= f.input :subtitle, :label => "副標", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :category_id, as: :select, :label => "分類", collection: @categories, promt: "請選擇聚會分類", include_blank: "請選擇聚會分類", :input_html => {:class => "form-control"} %></br>
     <%= f.input :description, :label => "簡介", :input_html => {:class => "form-control"} %></br>
     <%= f.input :location, :label => "所在地", :input_html => {:class => "form-control"} %></br>
     <%= f.input :day, :label => "例行日", :input_html => {:class => "form-control"} %></br>

@@ -13,6 +13,7 @@ class Meetup < ActiveRecord::Base
   validates :description, :presence => "true"
   validates :location, :presence => "true"
   validates :day, :presence => "true"
+  validates :category_id, :presence => "true"
   validates_presence_of :cover
 
 end
