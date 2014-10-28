@@ -22,8 +22,20 @@
         <%= member.email %>
       <% end %>
     </div>
-    <div id="event">
+    <div id="event" class="col-md-12" style="padding: 0px;">
       <h3>活動</h3>
+      <% @events.each do |event| %>
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <%= link_to meetup_event_path(@meetup, event) do %>
+              <div class="caption">
+                <h3><%= event.subject %></h3>
+                <p><%= event.date %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
     <div id="note">
       <h3>筆記</h3>

@@ -1,1 +1,33 @@
+<h1 class="text-center"><%= @event.subject %></h1>
+<h2 class="text-center"><%= @meetup.title %>的活動</h2>
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <%= link_to "簡介", anchor: "about" %>
+    <%= link_to "參與者", anchor: "attendee" %>
+    <%= link_to "筆記", anchor: "note" %>
+    <%= link_to "照片", anchor: "photo" %>
+
+    <div id="about">
+      <h3>簡介</h3>
+      <p>
+        <%= @event.content %><br/>
+        <%= @event.date %><br/>
+        <%= @event.place %><br/>
+        <%= @event.price %>
+      </p>
+    </div>
+    <div id="attendee">
+      <h3>參與者</h3>
+      <% @attendees.each do |attendee| %>
+        <%= attendee.email %>
+      <% end %>
+    </div>
+    <div id="note">
+      <h3>筆記</h3>
+    </div>
+    <div id="photo">
+      <h3>照片</h3>
+    </div>
+  </div>
+</div>
 

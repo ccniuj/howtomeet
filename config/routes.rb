@@ -12,9 +12,9 @@ Rails.application.routes.draw do
   end
 
   resources :categories
-  resources :meetups do
+  resources :meetups, only: %i[index show] do
     get 'find', on: :member
-    resources :events
+    resources :events, only: %i[index show]
   end
   resources :notes
   resources :images

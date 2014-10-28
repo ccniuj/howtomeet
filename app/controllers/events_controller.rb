@@ -11,6 +11,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @attendees = Attendee.where(event_id: @event.id).map(&:user_id).map{ |anchor| User.find(anchor) }
   end
 
   # GET /events/new
