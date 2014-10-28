@@ -1,23 +1,30 @@
-<h1>Listing admin_meetups</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @admin_meetups.each do |admin_meetup| %>
-      <tr>
-        <td><%= link_to 'Show', admin_meetup %></td>
-        <td><%= link_to 'Edit', edit_admin_meetup_path(admin_meetup) %></td>
-        <td><%= link_to 'Destroy', admin_meetup, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<h1 class="text-center">我的聚會</h1>
+<div class="row">
+  <br/>
+  <br/>
+  <div class="col-md-offset-1 col-md-10">
+    <%= link_to "新增聚會", new_admin_meetup_path, class: "btn btn-primary pull-right" %>
+    <br/><br/>
+    <% @admin_meetups.each do |meetup| %>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <%= link_to meetup_path(meetup) do %>
+            <%= image_tag meetup.cover.url %>
+            <div class="caption">
+              <h3><%= meetup.title %></h3>
+              <p><%= meetup.subtitle %></p>
+              <p><%= meetup.day %></p>
+              <p>
+                <%= link_to "活動", admin_meetup_events_path(meetup), class: "btn btn-default" %>
+                <%= link_to "編輯", edit_admin_meetup_path(meetup), class: "btn btn-default" %>
+                <%= link_to "刪除", admin_meetup_path(meetup), class: "btn btn-danger", method: "delete", data: {confirm: "確認刪除?"} %> 
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
+  </div>
+</div>
 <br>
 
-<%= link_to 'New Meetup', new_admin_meetup_path %>

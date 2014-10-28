@@ -21,6 +21,7 @@ class Admin::MeetupsController < ApplicationController
 
   # GET /admin/meetups/1/edit
   def edit
+    @categories = Category.all
   end
 
   # POST /admin/meetups
@@ -45,9 +46,10 @@ class Admin::MeetupsController < ApplicationController
   # PATCH/PUT /admin/meetups/1
   # PATCH/PUT /admin/meetups/1.json
   def update
+    @admin_meetup.cover = params[:meetup][:cover]
     respond_to do |format|
       if @admin_meetup.update(admin_meetup_params)
-        format.html { redirect_to @admin_meetup, notice: 'Meetup was successfully updated.' }
+        format.html { redirect_to @admin_meetup, notice: '成功更新聚會' }
         format.json { render :show, status: :ok, location: @admin_meetup }
       else
         format.html { render :edit }
