@@ -63,7 +63,7 @@ class Admin::MeetupsController < ApplicationController
   def destroy
     @admin_meetup.destroy
     respond_to do |format|
-      format.html { redirect_to admin_meetups_url, notice: 'Meetup was successfully destroyed.' }
+      format.html { redirect_to admin_meetups_url, notice: '成功刪除聚會' }
       format.json { head :no_content }
     end
   end

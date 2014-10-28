@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20141026120121) do
     t.string   "content"
     t.datetime "date"
     t.string   "place"
-    t.integer  "price"
+    t.string   "price"
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"

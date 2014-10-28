@@ -1,10 +1,12 @@
 class Admin::EventsController < ApplicationController
   before_action :set_admin_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin_meetup
+  before_action :authenticate_user!
 
   # GET /admin/events
   # GET /admin/events.json
   def index
-    @admin_events = Event.all
+    @admin_events = @admin_meetup.events.all
   end
 
   # GET /admin/events/1
@@ -14,7 +16,7 @@ class Admin::EventsController < ApplicationController
 
   # GET /admin/events/new
   def new
-    @admin_event = Event.new
+    @admin_event = @admin_meetup.events.new
   end
 
   # GET /admin/events/1/edit
@@ -24,11 +26,11 @@ class Admin::EventsController < ApplicationController
   # POST /admin/events
   # POST /admin/events.json
   def create
-    @admin_event = Event.new(admin_event_params)
+    @admin_event = @admin_meetup.events.new(admin_event_params)
 
     respond_to do |format|
       if @admin_event.save
-        format.html { redirect_to @admin_event, notice: 'Event was successfully created.' }
+        format.html { redirect_to [@admin_meetup, @admin_event], notice: '成功新增活動' }
         format.json { render :show, status: :created, location: @admin_event }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class Admin::EventsController < ApplicationController
   def update
     respond_to do |format|
       if @admin_event.update(admin_event_params)
-        format.html { redirect_to @admin_event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to [@admin_meetup, @admin_event], notice: '成功更新活動' }
         format.json { render :show, status: :ok, location: @admin_event }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class Admin::EventsController < ApplicationController
   def destroy
     @admin_event.destroy
     respond_to do |format|
-      format.html { redirect_to admin_events_url, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to admin_meetup_events_path(@admin_meetup), notice: '成功刪除活動' }
       format.json { head :no_content }
     end
   end
@@ -67,8 +69,12 @@ class Admin::EventsController < ApplicationController
       @admin_event = Event.find(params[:id])
     end
 
+    def set_admin_meetup
+      @admin_meetup = Meetup.find(params[:meetup_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_event_params
-      params[:admin_event]
+      params[:event].permit(:subject, :content, :date, :place, :price)
     end
 end
