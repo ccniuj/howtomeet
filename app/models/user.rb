@@ -5,10 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :meetup_members
-  has_many :meetups, as: :meetable, through: :meetup_members
+  has_many :meetups, as: :meetable, through: :meetup_members, dependent: :destroy
 
   has_many :attendees
-  has_many :events, through: :attendees
+  has_many :events, through: :attendees, dependent: :destroy
   
-  has_many :review, as: :reviewable
+  has_many :review, as: :reviewable, dependent: :destroy
 end

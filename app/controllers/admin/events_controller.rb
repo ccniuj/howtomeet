@@ -30,6 +30,7 @@ class Admin::EventsController < ApplicationController
 
     respond_to do |format|
       if @admin_event.save
+        add_attendee(@admin_event, current_user)
         format.html { redirect_to [@admin_meetup, @admin_event], notice: '成功新增活動' }
         format.json { render :show, status: :created, location: @admin_event }
       else
@@ -65,6 +66,11 @@ class Admin::EventsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def add_attendee(event, user)
+      Attendee.create(event_id: event.id, user_id: user.id)
+    end
+
     def set_admin_event
       @admin_event = Event.find(params[:id])
     end
