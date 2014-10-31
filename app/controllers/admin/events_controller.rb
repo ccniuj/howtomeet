@@ -65,11 +65,8 @@ class Admin::EventsController < ApplicationController
   end
 
   def open_new_file
-    require 'rubygems'
-    require 'google/api_client'
-
-    meetup = Meetup.find(session[:meetup_id])
-    event = Event.find(session[:event_id])
+    meetup = Meetup.find(params[:meetup_id])
+    event = Event.find(params[:id])
     
     client = Google::APIClient.new(:application_name => 'howtomeet', :application_version => '1.0.0')
     drive = client.discovered_api('drive', 'v2')

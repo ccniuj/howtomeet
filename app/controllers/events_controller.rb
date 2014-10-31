@@ -12,10 +12,10 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     # @attendees = Attendee.where(event_id: @event.id).map(&:user_id).map{ |anchor| User.find(anchor) }
+    # session[:event_id] = @event.id
+    # session[:meetup_id] = @meetup.id
     @attendees = @event.users.all
     @note = @event.notes.first
-    session[:event_id] = @event.id
-    session[:meetup_id] = @meetup.id
   end
 
   # GET /events/new
