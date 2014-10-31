@@ -68,19 +68,20 @@ class Admin::EventsController < ApplicationController
     require 'rubygems'
     require 'google/api_client'
 
-    meetup_id = session[:meetup_id]
-    event_id = session[:event_id]
-
+    meetup = Meetup.find(session[:meetup_id])
+    event = Event.find(session[:event_id])
+    
     client = Google::APIClient.new(:application_name => 'howtomeet', :application_version => '1.0.0')
     drive = client.discovered_api('drive', 'v2')
     client.authorization.access_token = request.env['omniauth.auth']['credentials']['token']
 
     # Insert a file
     file = drive.files.insert.request_schema.new({
-      'title' => 'Hello World',
-      'description' => 'A test document',
+      'title' => meetup.title + '-' + event.subject,
+      'description' => meetup.title + '的活動',
       'mimeType' => 'application/vnd.google-apps.document'
     })
+    
     media = Google::APIClient::UploadIO.new('helloworld.txt', 'text/plain')
     upload_result = client.execute(
       :api_method => drive.files.insert,
@@ -107,8 +108,6 @@ class Admin::EventsController < ApplicationController
     #   return nil
     # end
 
-    meetup = Meetup.find(meetup_id)
-    event = Event.find(event_id)
     event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
     redirect_to meetup_event_path(meetup, event)
   end
