@@ -10,7 +10,8 @@ class MeetupsController < ApplicationController
   # GET /meetups/1
   # GET /meetups/1.json
   def show
-    @members = MeetupMember.where(meetup_id: @meetup.id).map(&:user_id).map{ |anchor| User.find(anchor) }
+    # @members = MeetupMember.where(meetup_id: @meetup.id).map(&:user_id).map{ |anchor| User.find(anchor) }
+    @members = @meetup.users.all
     @events = @meetup.events.all
   end
 

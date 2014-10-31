@@ -1,6 +1,6 @@
 class Admin::EventsController < ApplicationController
   before_action :set_admin_event, only: [:show, :edit, :update, :destroy]
-  before_action :set_admin_meetup
+  before_action :set_admin_meetup, except: [:open_new_file]
   before_action :authenticate_user!
 
   # GET /admin/events
@@ -64,6 +64,55 @@ class Admin::EventsController < ApplicationController
     end
   end
 
+  def open_new_file
+    require 'rubygems'
+    require 'google/api_client'
+
+    meetup_id = session[:meetup_id]
+    event_id = session[:event_id]
+
+    client = Google::APIClient.new(:application_name => 'howtomeet', :application_version => '1.0.0')
+    drive = client.discovered_api('drive', 'v2')
+    client.authorization.access_token = request.env['omniauth.auth']['credentials']['token']
+
+    # Insert a file
+    file = drive.files.insert.request_schema.new({
+      'title' => 'Hello World',
+      'description' => 'A test document',
+      'mimeType' => 'application/vnd.google-apps.document'
+    })
+    media = Google::APIClient::UploadIO.new('helloworld.txt', 'text/plain')
+    upload_result = client.execute(
+      :api_method => drive.files.insert,
+      :body_object => file,
+      :media => media,
+      :parameters => {
+        'uploadType' => 'multipart',
+        'alt' => 'json'})
+
+    new_permission = drive.permissions.insert.request_schema.new({
+      'value' => nil,
+      'type' => 'anyone',
+      'role' => 'writer'
+    })
+    perm_result = client.execute(
+      :api_method => drive.permissions.insert,
+      :body_object => new_permission,
+      :parameters => { 'fileId' => upload_result.data.id })
+
+    # if result.status == 200
+    #   return result.data
+    # else
+    #   puts "An error occurred: #{result.data['error']['message']}"
+    #   return nil
+    # end
+
+    meetup = Meetup.find(meetup_id)
+    event = Event.find(event_id)
+    event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
+    redirect_to meetup_event_path(meetup, event)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
 
@@ -83,4 +132,6 @@ class Admin::EventsController < ApplicationController
     def admin_event_params
       params[:event].permit(:subject, :content, :date, :place, :price)
     end
+
+    
 end

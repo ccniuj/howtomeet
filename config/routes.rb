@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  
   root 'pages#index'
   
+  get 'auth/:provider/callback', to: 'admin/events#open_new_file'
+  get 'auth/failure', to: redirect('/')
+
   namespace :admin do
     resources :categories
     resources :meetups do
