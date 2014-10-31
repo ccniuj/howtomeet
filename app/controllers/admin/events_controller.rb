@@ -73,7 +73,7 @@ class Admin::EventsController < ApplicationController
     
     client = Google::APIClient.new(:application_name => 'howtomeet', :application_version => '1.0.0')
     drive = client.discovered_api('drive', 'v2')
-    client.authorization.access_token = request.env['omniauth.auth']['credentials']['token']
+    client.authorization.access_token = current_user.token
 
     # Insert a file
     file = drive.files.insert.request_schema.new({

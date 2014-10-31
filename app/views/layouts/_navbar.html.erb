@@ -40,8 +40,7 @@
           <li><%= link_to current_user.email %></li>
           <%= render 'layouts/admin_menu' %>
         <% else %>
-          <li><%= link_to "登入", new_user_session_path %></li>
-          <li><%= link_to "註冊", new_user_registration_path %></li>
+          <li><%= link_to "Google", user_omniauth_authorize_path(:google_oauth2) %></li>
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
