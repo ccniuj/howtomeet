@@ -4,7 +4,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :meetup_id
       t.string :subject
       t.string :subject_en
-      t.string :content
+      t.text :content
       t.datetime :date
       t.string :place
       t.string :price

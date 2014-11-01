@@ -19,4 +19,22 @@ class Meetup < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title_en, use: :slugged
 
+  def weekday
+    case self.day
+    when 1 
+      return "星期一"
+    when 2
+      return "星期二"
+    when 3 
+      return "星期三"
+    when 4
+      return "星期四"
+    when 5 
+      return "星期五"
+    when 6
+      return "星期六"
+    when 7 
+      return "星期日"
+    end
+  end
 end

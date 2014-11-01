@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
         user = User.create(
            name: data["name"],
            email: data["email"],
+           uid: data["email"].split('@')[0],
            thumbnail: data["image"],
            picture: data["image"].split('=')[0]+'=200',
            provider: access_token.provider,
@@ -30,4 +31,8 @@ class User < ActiveRecord::Base
     end
     user
   end
+
+  extend FriendlyId
+  friendly_id :uid, use: :slugged
+  
 end

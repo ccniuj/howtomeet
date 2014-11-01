@@ -80,6 +80,7 @@ class Admin::EventsController < ApplicationController
 
   def open_new_file
     require 'google/api_client'
+
     meetup = Meetup.find(params[:meetup_id])
     event = Event.find(params[:id])
     
@@ -113,13 +114,13 @@ class Admin::EventsController < ApplicationController
       :body_object => new_permission,
       :parameters => { 'fileId' => upload_result.data.id })
 
-    # if result.status == 200
-    #   return result.data
+    # if upload_result.status == 200
     # else
-    #   puts "An error occurred: #{result.data['error']['message']}"
-    #   return nil
+    #   puts "An error occurred: #{upload_result.data['error']['message']}"
+    #   redirect_to meetup_event_path(meetup, event)
     # end
-
+    # binding.pry
+    
     event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
     redirect_to meetup_event_path(meetup, event)
   end
