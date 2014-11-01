@@ -1,17 +1,11 @@
-<%= form_for(@admin_event) do |f| %>
-  <% if @admin_event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@admin_event.errors.count, "error") %> prohibited this admin_event from being saved:</h2>
-
-      <ul>
-      <% @admin_event.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+<%= simple_form_for [:admin, @admin_meetup, @admin_event] do |f| %>
+  <div class="form-group">
+    <%= f.input :subject, :label => "活動主題", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :subject_en, :label => "英文網址", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :content, :label => "內容", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :date, :label => "時間", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :place, :label => "地點", :input_html => {:class => "form-control"} %></br>
+    <%= f.input :price, :label => "入場費", :input_html => {:class => "form-control"} %></br>
   </div>
+  <%= f.submit "確定", :class => "btn btn-success" %>
 <% end %>

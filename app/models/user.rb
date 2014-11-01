@@ -5,10 +5,34 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :meetup_members
-  has_many :meetups, as: :meetable, through: :meetup_members
+  has_many :meetups, as: :meetable, through: :meetup_members, dependent: :destroy
 
   has_many :attendees
-  has_many :events, through: :attendees
+  has_many :events, through: :attendees, dependent: :destroy
   
-  has_many :review, as: :reviewable
+  has_many :review, as: :reviewable, dependent: :destroy
+
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    user = User.where(:email => data["email"]).first
+
+    # Uncomment the section below if you want users to be created if they don't exist
+    unless user
+        user = User.create(
+           name: data["name"],
+           email: data["email"],
+           uid: data["email"].split('@')[0],
+           thumbnail: data["image"],
+           picture: data["image"].split('=')[0]+'=200',
+           provider: access_token.provider,
+           token: access_token.credentials.token,
+           password: Devise.friendly_token[0,20]
+        )
+    end
+    user
+  end
+
+  extend FriendlyId
+  friendly_id :uid, use: :slugged
+  
 end

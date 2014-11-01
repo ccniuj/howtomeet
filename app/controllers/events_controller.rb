@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_meetup
 
   # GET /events
   # GET /events.json
@@ -10,6 +11,16 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    # @attendees = Attendee.where(event_id: @event.id).map(&:user_id).map{ |anchor| User.find(anchor) }
+    # session[:event_id] = @event.id
+    # session[:meetup_id] = @meetup.id
+    @attendees = @event.users.all
+    @note = @event.notes.first
+    if current_user
+      @is_attendee = Attendee.where(event_id: @event.id, user_id: current_user.id).take
+    else
+      @is_attendee = nil
+    end
   end
 
   # GET /events/new
@@ -65,6 +76,10 @@ class EventsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    def set_meetup
+      @meetup = Meetup.find(params[:meetup_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

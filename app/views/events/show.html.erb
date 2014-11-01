@@ -1,4 +1,60 @@
-<p id="notice"><%= notice %></p>
+<h1 class="text-center"><%= @event.subject %></h1>
+<h2 class="text-center"><%= link_to @meetup.title, meetup_path(@meetup) %>的活動</h2>
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <div class="col-md-offset-3 col-md-6 text-center">
+      <%= @event.date.strftime('%Y/%m/%d %H:%M') %>&nbsp;
+      <%= @event.place %>&nbsp;
+      <%= @event.price %>
+    </div>
+    <br/>
+    <br/>
+    <div class="col-md-offset-2 col-md-8">
+      <a href="#about" class="btn btn-default">簡介</a>
+      <a href="#attendee" class="btn btn-default">參與者</a>
+      <a href="#note" class="btn btn-default">筆記</a>
+      <a href="#photo" class="btn btn-default">照片</a>
+    
+      <% if @is_attendee&&current_user %>
+        <% if @is_attendee.is_owner %>
+          <span class="pull-right">您是此活動召集人</span>
+        <% else %>
+          <%= link_to "退出活動", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
+          <span class="pull-right">您已參加此活動</span>
+        <% end %>
+      <% else %>
+        <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
+      <% end %>
+    </div>
+    <br/>
+    <br/>
+    <div id="about">
+      <h3 class="text-center">簡介</h3>
+      <p>
+        <%= @event.content %>
+      </p>
+    </div>
+    <div id="attendee">
+      <h3 class="text-center">參與者</h3>
+      <% @attendees.each do |attendee| %>
+        <%= link_to '/info/'+attendee.uid do %>
+          <%= image_tag attendee.thumbnail %>
+        <% end %>
+      <% end %>
+    </div>
+    <div id="note">
+      <h3 class="text-center">筆記</h3>
+      <% if @note %>
+        <iframe width="100%" height="600px" src="<%= @note.link %>"></iframe>
+      <% else %>
+        <% if @is_attendee&&@is_attendee.is_owner %>
+          <%= link_to "建立筆記", open_new_file_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div id="photo">
+      <h3 class="text-center">照片</h3>
+    </div>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>

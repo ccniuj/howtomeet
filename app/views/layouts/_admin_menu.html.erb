@@ -1,9 +1,8 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理選單<span class="caret"></span></a>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
+    <li><%= link_to "個人資訊", '/info/'+current_user.uid %></li>
+    <li><%= link_to "我的聚會", admin_meetups_path %></li>
     <li class="divider"></li>
     <li><%= link_to "登出", destroy_user_session_path, :method => :delete %></li>
   </ul>

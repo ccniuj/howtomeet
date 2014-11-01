@@ -1,26 +1,39 @@
 Rails.application.routes.draw do
-  
   root 'pages#index'
   
-  namespace :admin do
-    resources :categories
-    resources :meetups do
-      resources :events
-    end
-    resources :notes
-    resources :images
-  end
+  get 'auth/:provider/callback', to: 'admin/events#open_new_file'
+  get 'auth/failure', to: redirect('/')
 
+
+  resources :pages, only: %i[index show]
+  get '/info/:id', to: 'pages#info'
   resources :categories
-  resources :meetups do
-    resources :events
+  resources :meetups, only: %i[index show] do
+    get 'find', on: :member
+    resources :events, only: %i[index show]
   end
   resources :notes
   resources :images
   resources :reviews
   resources :attendees
 
-  devise_for :users
+  namespace :admin do
+    resources :categories
+    resources :meetups do
+      get 'add', on: :member
+      get 'remove', on: :member
+      resources :events do
+        get 'add', on: :member
+        get 'remove', on: :member
+        get 'open_new_file', on: :member
+      end
+    end
+    resources :notes
+    resources :images
+  end
+
+
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

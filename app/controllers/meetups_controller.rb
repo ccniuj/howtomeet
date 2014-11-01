@@ -10,6 +10,14 @@ class MeetupsController < ApplicationController
   # GET /meetups/1
   # GET /meetups/1.json
   def show
+    # @members = MeetupMember.where(meetup_id: @meetup.id).map(&:user_id).map{ |anchor| User.find(anchor) }
+    @members = @meetup.users.all
+    @events = @meetup.events.all
+    if current_user
+      @is_member = MeetupMember.where(meetup_id: @meetup.id, user_id: current_user.id).take
+    else
+      @is_member = nil
+    end
   end
 
   # GET /meetups/new
@@ -19,6 +27,20 @@ class MeetupsController < ApplicationController
 
   # GET /meetups/1/edit
   def edit
+  end
+
+  def find
+    # binding.pry
+    @categories = Category.all
+
+    category_id = params[:id].to_i
+    # binding.pry
+    if category_id == 0
+      @meetups = Meetup.all
+      # binding.pry
+    else
+      @meetups = Meetup.where(category_id: params[:id])
+    end
   end
 
   # POST /meetups

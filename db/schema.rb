@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141026120121) do
+ActiveRecord::Schema.define(version: 20141101182808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20141026120121) do
   create_table "attendees", force: true do |t|
     t.integer  "event_id"
     t.integer  "user_id"
+    t.boolean  "is_owner"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -32,14 +33,31 @@ ActiveRecord::Schema.define(version: 20141026120121) do
   create_table "events", force: true do |t|
     t.integer  "meetup_id"
     t.string   "subject"
-    t.string   "content"
+    t.string   "subject_en"
+    t.text     "content"
     t.datetime "date"
     t.string   "place"
-    t.integer  "price"
+    t.string   "price"
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
+
+  add_index "events", ["slug"], name: "index_events_on_slug", unique: true, using: :btree
+
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "images", force: true do |t|
     t.datetime "created_at"
@@ -57,6 +75,7 @@ ActiveRecord::Schema.define(version: 20141026120121) do
   create_table "meetups", force: true do |t|
     t.integer  "category_id"
     t.string   "title"
+    t.string   "title_en"
     t.string   "subtitle"
     t.text     "description"
     t.integer  "day"
@@ -65,9 +84,14 @@ ActiveRecord::Schema.define(version: 20141026120121) do
     t.string   "cover"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
+  add_index "meetups", ["slug"], name: "index_meetups_on_slug", unique: true, using: :btree
+
   create_table "notes", force: true do |t|
+    t.integer  "event_id"
+    t.string   "file_id"
     t.string   "link"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -82,6 +106,12 @@ ActiveRecord::Schema.define(version: 20141026120121) do
   end
 
   create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "uid"
+    t.string   "provider"
+    t.string   "token"
+    t.string   "thumbnail"
+    t.string   "picture"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -94,9 +124,11 @@ ActiveRecord::Schema.define(version: 20141026120121) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
 end
