@@ -13,7 +13,11 @@ class MeetupsController < ApplicationController
     # @members = MeetupMember.where(meetup_id: @meetup.id).map(&:user_id).map{ |anchor| User.find(anchor) }
     @members = @meetup.users.all
     @events = @meetup.events.all
-    @is_member = MeetupMember.where(meetup_id: @meetup.id, user_id: current_user.id).take
+    if current_user
+      @is_member = MeetupMember.where(meetup_id: @meetup.id, user_id: current_user.id).take
+    else
+      @is_member = nil
+    end
   end
 
   # GET /meetups/new

@@ -8,7 +8,7 @@
     <%= link_to "活動", anchor: "event" %>
     <%= link_to "筆記", anchor: "note" %>
     <%= link_to "照片", anchor: "photo" %>
-    <% if @is_member %>
+    <% if @is_member&&current_user %>
       <span class="pull-right">您已加入此聚會</span>
     <% else %>
       <%= link_to "加入聚會", add_admin_meetup_path(@meetup), class: "btn btn-primary pull-right" %>

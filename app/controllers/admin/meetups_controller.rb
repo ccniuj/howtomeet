@@ -69,9 +69,11 @@ class Admin::MeetupsController < ApplicationController
   end
 
   def add
-    add_meetup_member(@admin_meetup, current_user)
+    unless MeetupMember.where(meetup_id: @admin_meetup.id, user_id: current_user.id).take
+      add_meetup_member(@admin_meetup, current_user)
+      flash['notice']="成功加入此聚會"
+    end
     redirect_to meetup_path(@admin_meetup)
-    flash['notice']="成功加入此聚會"
   end
 
   private
