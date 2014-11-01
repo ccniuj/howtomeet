@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :review, as: :reviewable, dependent: :destroy
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    binding.pry
     data = access_token.info
     user = User.where(:email => data["email"]).first
 
@@ -21,6 +22,7 @@ class User < ActiveRecord::Base
         user = User.create(
            name: data["name"],
            email: data["email"],
+           thumbnail: data["image"],
            provider: access_token.provider,
            token: access_token.credentials.token,
            password: Devise.friendly_token[0,20]

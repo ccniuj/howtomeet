@@ -42,6 +42,7 @@
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
           <li><%= link_to current_user.email %></li>
+          <li><%= image_tag current_user.thumbnail, width: "30px", style: "margin-top: 10px; margin-right: 10px;" %></li>
           <%= render 'layouts/admin_menu' %>
         <% else %>
           <li><a style="padding-right: 0px;">用Google一鍵登入></a></li>
