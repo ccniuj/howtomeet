@@ -1,5 +1,5 @@
 class Admin::MeetupsController < ApplicationController
-  before_action :set_admin_meetup, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin_meetup, only: [:show, :edit, :update, :destroy, :add]
   before_action :authenticate_user!
   
   # GET /admin/meetups
@@ -66,6 +66,12 @@ class Admin::MeetupsController < ApplicationController
       format.html { redirect_to admin_meetups_url, notice: '成功刪除聚會' }
       format.json { head :no_content }
     end
+  end
+
+  def add
+    add_meetup_member(@admin_meetup, current_user)
+    redirect_to meetup_path(@admin_meetup)
+    flash['notice']="成功加入此聚會"
   end
 
   private

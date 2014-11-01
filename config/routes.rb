@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :categories
     resources :meetups do
+      get 'add', on: :member
       resources :events do
         get 'open_new_file', on: :member
       end
