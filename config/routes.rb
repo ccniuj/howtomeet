@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :images
   end
 
+  resources :pages, only: %i[index show]
   resources :categories
   resources :meetups, only: %i[index show] do
     get 'find', on: :member
