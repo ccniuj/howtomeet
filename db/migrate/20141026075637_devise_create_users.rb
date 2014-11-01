@@ -5,6 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :provider
       t.string :token
       t.string :thumbnail
+      t.string :picture
       
       ## Database authenticatable
       t.string :email,              null: false, default: ""

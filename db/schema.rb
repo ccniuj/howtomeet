@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20141026120121) do
     t.string   "provider"
     t.string   "token"
     t.string   "thumbnail"
+    t.string   "picture"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"

@@ -30,7 +30,7 @@
             <div class="item">
           <% end %>
             <%= link_to meetup_path(meetup) do %>
-              <%= image_tag meetup.cover %>
+              <%= image_tag meetup.cover, width: "100%" %>
               <div class="carousel-caption">
                 <h1><%= meetup.title %></h1>
               </div>
