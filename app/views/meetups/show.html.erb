@@ -6,7 +6,6 @@
     <%= link_to "簡介", anchor: "about" %>
     <%= link_to "成員", anchor: "member" %>
     <%= link_to "活動", anchor: "event" %>
-    <%= link_to "筆記", anchor: "note" %>
     <%= link_to "照片", anchor: "photo" %>
     <% if @is_member&&current_user %>
       <span class="pull-right">您已加入此聚會</span>
@@ -41,9 +40,6 @@
           </div>
         </div>
       <% end %>
-    </div>
-    <div id="note">
-      <h3>筆記</h3>
     </div>
     <div id="photo">
       <h3>照片</h3>

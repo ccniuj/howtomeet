@@ -16,6 +16,11 @@ class EventsController < ApplicationController
     # session[:meetup_id] = @meetup.id
     @attendees = @event.users.all
     @note = @event.notes.first
+    if current_user
+      @is_attendee = Attendee.where(event_id: @event.id, user_id: current_user.id).take
+    else
+      @is_attendee = nil
+    end
   end
 
   # GET /events/new

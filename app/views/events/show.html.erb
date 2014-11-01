@@ -6,6 +6,12 @@
     <%= link_to "參與者", anchor: "attendee" %>
     <%= link_to "筆記", anchor: "note" %>
     <%= link_to "照片", anchor: "photo" %>
+    
+    <% if @is_attendee&&current_user %>
+      <span class="pull-right">您已參加此活動</span>
+    <% else %>
+      <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
+    <% end %>
 
     <div id="about">
       <h3>簡介</h3>

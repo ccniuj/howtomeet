@@ -5,7 +5,7 @@ class Admin::MeetupsController < ApplicationController
   # GET /admin/meetups
   # GET /admin/meetups.json
   def index
-    @admin_meetups = Meetup.all
+    @admin_meetups = current_user.meetups.all
   end
 
   # GET /admin/meetups/1

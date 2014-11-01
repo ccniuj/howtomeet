@@ -1,5 +1,5 @@
 class Admin::EventsController < ApplicationController
-  before_action :set_admin_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin_event, only: [:show, :edit, :update, :destroy, :add]
   before_action :set_admin_meetup, except: [:open_new_file]
   before_action :authenticate_user!
 
@@ -62,6 +62,14 @@ class Admin::EventsController < ApplicationController
       format.html { redirect_to admin_meetup_events_path(@admin_meetup), notice: '成功刪除活動' }
       format.json { head :no_content }
     end
+  end
+
+  def add
+    unless Attendee.where(event_id: @admin_event.id, user_id: current_user.id).take
+      add_attendee(@admin_event, current_user)
+      flash['notice']="成功加入此活動"
+    end
+    redirect_to meetup_event_path(@admin_meetup, @admin_event)
   end
 
   def open_new_file
