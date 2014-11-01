@@ -21,8 +21,10 @@ Rails.application.routes.draw do
     resources :categories
     resources :meetups do
       get 'add', on: :member
+      get 'remove', on: :member
       resources :events do
         get 'add', on: :member
+        get 'remove', on: :member
         get 'open_new_file', on: :member
       end
     end

@@ -1,5 +1,5 @@
 class Admin::MeetupsController < ApplicationController
-  before_action :set_admin_meetup, only: [:show, :edit, :update, :destroy, :add]
+  before_action :set_admin_meetup, only: [:show, :edit, :update, :destroy, :add, :remove]
   before_action :authenticate_user!
   
   # GET /admin/meetups
@@ -32,7 +32,7 @@ class Admin::MeetupsController < ApplicationController
     # binding.pry
     respond_to do |format|
       if @admin_meetup.save
-        add_meetup_member(@admin_meetup, current_user)
+        create_meetup_member(@admin_meetup, current_user)
 
         format.html { redirect_to @admin_meetup, notice: '成功建立聚會' }
         format.json { render :show, status: :created, location: @admin_meetup }
@@ -76,11 +76,26 @@ class Admin::MeetupsController < ApplicationController
     redirect_to meetup_path(@admin_meetup)
   end
 
+  def remove
+    remove_meetup_member(@admin_meetup, current_user)
+    flash['notice']="成功退出此聚會"
+    redirect_to meetup_path(@admin_meetup)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
 
-    def add_meetup_member(meetup, user)
+    def create_meetup_member(meetup, user)
       MeetupMember.create(meetup_id: meetup.id, user_id: user.id, is_owner: true)
+    end
+
+    def add_meetup_member(meetup, user)
+      MeetupMember.create(meetup_id: meetup.id, user_id: user.id, is_owner: false)
+    end
+
+    def remove_meetup_member(meetup, user)
+      MeetupMember.where(meetup_id: meetup.id, user_id: user.id).take.delete
+      meetup.events.each{ |event| Attendee.where(event_id: event.id, user_id: current_user.id).take.delete }
     end
 
     def set_admin_meetup

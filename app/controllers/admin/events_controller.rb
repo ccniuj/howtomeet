@@ -1,5 +1,5 @@
 class Admin::EventsController < ApplicationController
-  before_action :set_admin_event, only: [:show, :edit, :update, :destroy, :add]
+  before_action :set_admin_event, only: [:show, :edit, :update, :destroy, :add, :remove]
   before_action :set_admin_meetup, except: [:open_new_file]
   before_action :authenticate_user!
 
@@ -72,6 +72,12 @@ class Admin::EventsController < ApplicationController
     redirect_to meetup_event_path(@admin_meetup, @admin_event)
   end
 
+  def remove
+    remove_attendee(@admin_event, current_user)
+    flash['notice']="成功加入此活動"
+    redirect_to meetup_event_path(@admin_meetup, @admin_event)
+  end
+
   def open_new_file
     meetup = Meetup.find(params[:meetup_id])
     event = Event.find(params[:id])
@@ -122,6 +128,13 @@ class Admin::EventsController < ApplicationController
 
     def add_attendee(event, user)
       Attendee.create(event_id: event.id, user_id: user.id)
+      unless MeetupMember.where(meetup_id: event.meetup.id, user_id: user.id).take
+        MeetupMember.create(meetup_id: event.meetup.id, user_id: user.id, is_owner: false)
+      end
+    end
+
+    def remove_attendee(event, user)
+      Attendee.where(event_id: event.id, user_id: user.id).take.delete
     end
 
     def set_admin_event

@@ -8,6 +8,9 @@
     <%= link_to "活動", anchor: "event" %>
     <%= link_to "照片", anchor: "photo" %>
     <% if @is_member&&current_user %>
+      <% unless @is_member.is_owner %>
+        <%= link_to "退出聚會", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
+      <% end %>
       <span class="pull-right">您已加入此聚會</span>
     <% else %>
       <%= link_to "加入聚會", add_admin_meetup_path(@meetup), class: "btn btn-primary pull-right" %>
