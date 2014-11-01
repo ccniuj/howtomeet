@@ -104,6 +104,6 @@ class Admin::MeetupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_meetup_params
-      params[:meetup].permit(:title, :subtitle, :category_id, :description, :location, :day, :called, :file)
+      params[:meetup].permit(:title, :title_en, :subtitle, :category_id, :description, :location, :day, :called, :file)
     end
 end

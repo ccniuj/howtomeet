@@ -1,5 +1,5 @@
 <h1 class="text-center"><%= @event.subject %></h1>
-<h2 class="text-center"><%= @meetup.title %>的活動</h2>
+<h2 class="text-center"><%= link_to @meetup.title, meetup_path(@meetup) %>的活動</h2>
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
     <%= link_to "簡介", anchor: "about" %>
@@ -8,6 +8,9 @@
     <%= link_to "照片", anchor: "photo" %>
     
     <% if @is_attendee&&current_user %>
+      <% unless @is_attendee.is_owner %>
+        <%= link_to "退出活動", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
+      <% end %>
       <span class="pull-right">您已參加此活動</span>
     <% else %>
       <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
@@ -33,7 +36,9 @@
       <% if @note %>
         <iframe width="100%" height="600px" src="<%= @note.link %>"></iframe>
       <% else %>
-        <%= link_to "建立筆記", open_new_file_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary" %>
+        <% if @is_attendee&&@is_attendee.is_owner %>
+          <%= link_to "建立筆記", open_new_file_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary" %>
+        <% end %>
       <% end %>
     </div>
     <div id="photo">

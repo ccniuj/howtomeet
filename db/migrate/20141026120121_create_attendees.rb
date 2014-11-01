@@ -3,6 +3,7 @@ class CreateAttendees < ActiveRecord::Migration
     create_table :attendees do |t|
       t.integer :event_id
       t.integer :user_id
+      t.boolean :is_owner
       
       t.timestamps
     end

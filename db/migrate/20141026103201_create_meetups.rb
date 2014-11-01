@@ -3,6 +3,7 @@ class CreateMeetups < ActiveRecord::Migration
     create_table :meetups do |t|
       t.integer :category_id
       t.string :title
+      t.string :title_en
       t.string :subtitle
       t.text :description
       t.integer :day

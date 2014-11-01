@@ -3,6 +3,7 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.integer :meetup_id
       t.string :subject
+      t.string :subject_en
       t.string :content
       t.datetime :date
       t.string :place

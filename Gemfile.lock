@@ -35,6 +35,7 @@ GEM
       multi_json (>= 1.0.0)
     autoprefixer-rails (3.1.2.20141016)
       execjs
+    babosa (0.3.11)
     bcrypt (3.1.7)
     bootstrap-sass (3.2.0.2)
       sass (~> 3.2)
@@ -66,6 +67,8 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    friendly_id (5.0.4)
+      activerecord (>= 4.0.0)
     google-api-client (0.7.1)
       addressable (>= 2.3.2)
       autoparse (>= 0.3.3)
@@ -192,11 +195,13 @@ PLATFORMS
 
 DEPENDENCIES
   autoprefixer-rails
+  babosa
   bootstrap-sass
   carrierwave
   coffee-rails (~> 4.0.0)
   devise
   figaro
+  friendly_id
   google-api-client
   jbuilder (~> 2.0)
   jquery-rails

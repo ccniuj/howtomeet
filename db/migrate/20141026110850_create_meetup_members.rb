@@ -4,7 +4,7 @@ class CreateMeetupMembers < ActiveRecord::Migration
       t.integer :meetup_id
       t.integer :user_id
       t.boolean :is_owner
-      
+
       t.timestamps
     end
   end

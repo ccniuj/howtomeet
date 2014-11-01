@@ -9,14 +9,14 @@
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
 
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <div id="new_meetup" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
         <% @meetups.each_with_index do |meetup, index| %>
           <% if index==0 %>
-            <li data-target="#carousel-example-generic" data-slide-to="<%= index %>" class="active"></li>
+            <li data-target="#new_meetup" data-slide-to="<%= index %>" class="active"></li>
           <% else %>
-            <li data-target="#carousel-example-generic" data-slide-to="<%= index %>"></li>
+            <li data-target="#new_meetup" data-slide-to="<%= index %>"></li>
           <% end %>
         <% end %>
       </ol>
@@ -40,11 +40,11 @@
       </div>
 
       <!-- Controls -->
-      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+      <a class="left carousel-control" href="#new_meetup" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+      <a class="right carousel-control" href="#new_meetup" role="button" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right"></span>
         <span class="sr-only">Next</span>
       </a>

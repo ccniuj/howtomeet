@@ -30,7 +30,7 @@ class Admin::EventsController < ApplicationController
 
     respond_to do |format|
       if @admin_event.save
-        add_attendee(@admin_event, current_user)
+        create_attendee(@admin_event, current_user)
         format.html { redirect_to [@admin_meetup, @admin_event], notice: '成功新增活動' }
         format.json { render :show, status: :created, location: @admin_event }
       else
@@ -79,6 +79,7 @@ class Admin::EventsController < ApplicationController
   end
 
   def open_new_file
+    require 'google/api_client'
     meetup = Meetup.find(params[:meetup_id])
     event = Event.find(params[:id])
     
@@ -125,9 +126,15 @@ class Admin::EventsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def create_attendee(event, user)
+      Attendee.create(event_id: event.id, user_id: user.id, is_owner: true)
+      unless MeetupMember.where(meetup_id: event.meetup.id, user_id: user.id).take
+        MeetupMember.create(meetup_id: event.meetup.id, user_id: user.id, is_owner: false)
+      end
+    end
 
     def add_attendee(event, user)
-      Attendee.create(event_id: event.id, user_id: user.id)
+      Attendee.create(event_id: event.id, user_id: user.id, is_owner: false)
       unless MeetupMember.where(meetup_id: event.meetup.id, user_id: user.id).take
         MeetupMember.create(meetup_id: event.meetup.id, user_id: user.id, is_owner: false)
       end
@@ -147,7 +154,7 @@ class Admin::EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_event_params
-      params[:event].permit(:subject, :content, :date, :place, :price)
+      params[:event].permit(:subject, :subject_en, :content, :date, :place, :price)
     end
 
     
