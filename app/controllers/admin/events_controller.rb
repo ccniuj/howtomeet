@@ -114,15 +114,14 @@ class Admin::EventsController < ApplicationController
       :body_object => new_permission,
       :parameters => { 'fileId' => upload_result.data.id })
 
-    # if upload_result.status == 200
-    # else
-    #   puts "An error occurred: #{upload_result.data['error']['message']}"
-    #   redirect_to meetup_event_path(meetup, event)
-    # end
-    # binding.pry
-    
-    event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
-    redirect_to meetup_event_path(meetup, event)
+    unless upload_result.status == 200
+      # puts "An error occurred: #{upload_result.data['error']['message']}"
+      # redirect_to meetup_event_path(meetup, event)
+      redirect_to user_omniauth_authorize_path(:google_oauth2)
+    else
+      event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
+      redirect_to meetup_event_path(meetup, event)
+    end
   end
 
   private
