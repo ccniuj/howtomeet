@@ -5,7 +5,10 @@ class Admin::MeetupsController < ApplicationController
   # GET /admin/meetups
   # GET /admin/meetups.json
   def index
-    @admin_meetups = current_user.meetups.all
+    @admin_meetups_owner = current_user.meetups.map{ |anchor|
+      anchor if MeetupMember.where(meetup_id: anchor.id, is_owner: true).take }||[]
+    @admin_meetups_member = current_user.meetups.map{ |anchor|
+      anchor if MeetupMember.where(meetup_id: anchor.id, is_owner: false).take }||[]
   end
 
   # GET /admin/meetups/1
