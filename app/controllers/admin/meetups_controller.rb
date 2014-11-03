@@ -6,9 +6,10 @@ class Admin::MeetupsController < ApplicationController
   # GET /admin/meetups.json
   def index
     @admin_meetups_owner = current_user.meetups.map{ |anchor|
-      anchor if MeetupMember.where(meetup_id: anchor.id, is_owner: true).take }||[]
+      anchor if MeetupMember.where(meetup_id: anchor.id, is_owner: true).take }.has_element
     @admin_meetups_member = current_user.meetups.map{ |anchor|
-      anchor if MeetupMember.where(meetup_id: anchor.id, is_owner: false).take }||[]
+      anchor if MeetupMember.where(meetup_id: anchor.id, is_owner: false).take }.has_element
+    binding.pry
   end
 
   # GET /admin/meetups/1
@@ -109,4 +110,10 @@ class Admin::MeetupsController < ApplicationController
     def admin_meetup_params
       params[:meetup].permit(:title, :title_en, :subtitle, :category_id, :description, :location, :day, :called, :file)
     end
+end
+
+class Array
+  def has_element
+    self[0] ? self : []
+  end
 end
