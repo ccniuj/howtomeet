@@ -19,6 +19,10 @@ class Meetup < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title_en, use: :slugged
 
+  def is_owned?(user)
+    MeetupMember.where(meetup_id: self.id, user_id: user.id).take ? true : false
+  end
+
   def weekday
     case self.day
     when 1 
