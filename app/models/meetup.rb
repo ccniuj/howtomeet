@@ -14,10 +14,14 @@ class Meetup < ActiveRecord::Base
   validates :location, :presence => "true"
   validates :day, :presence => "true"
   validates :category_id, :presence => "true"
-  validates_presence_of :cover
+  # validates_presence_of :cover
  
   extend FriendlyId
   friendly_id :title_en, use: :slugged
+
+  def is_owned?(user)
+    MeetupMember.where(meetup_id: self.id, user_id: user.id, is_owner: true).take ? true : false
+  end
 
   def weekday
     case self.day

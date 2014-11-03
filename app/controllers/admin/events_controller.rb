@@ -2,6 +2,7 @@ class Admin::EventsController < ApplicationController
   before_action :set_admin_event, only: [:show, :edit, :update, :destroy, :add, :remove]
   before_action :set_admin_meetup, except: [:open_new_file]
   before_action :authenticate_user!
+  before_action :check_authority
 
   # GET /admin/events
   # GET /admin/events.json
@@ -146,6 +147,12 @@ class Admin::EventsController < ApplicationController
 
     def set_admin_event
       @admin_event = Event.find(params[:id])
+    end
+
+    def check_authority
+      unless @admin_meetup.is_owned?(current_user)
+        redirect_to admin_meetups_path
+      end
     end
 
     def set_admin_meetup

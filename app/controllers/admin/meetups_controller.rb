@@ -1,11 +1,15 @@
 class Admin::MeetupsController < ApplicationController
   before_action :set_admin_meetup, only: [:show, :edit, :update, :destroy, :add, :remove]
   before_action :authenticate_user!
-  
+  before_action :check_authority, only: [:edit, :update, :delete]
+
   # GET /admin/meetups
   # GET /admin/meetups.json
   def index
-    @admin_meetups = current_user.meetups.all
+    @admin_meetups_owner = current_user.meetups.map{ |anchor|
+      anchor if anchor.is_owned?(current_user) }.compact
+    @admin_meetups_member = current_user.meetups.map{ |anchor|
+      anchor unless anchor.is_owned?(current_user) }.compact
   end
 
   # GET /admin/meetups/1
@@ -96,6 +100,12 @@ class Admin::MeetupsController < ApplicationController
     def remove_meetup_member(meetup, user)
       MeetupMember.where(meetup_id: meetup.id, user_id: user.id).take.delete
       meetup.events.each{ |event| Attendee.where(event_id: event.id, user_id: current_user.id).take.delete }
+    end
+
+    def check_authority
+      unless @admin_meetup.is_owned?(current_user)
+        redirect_to admin_meetups_path
+      end
     end
 
     def set_admin_meetup

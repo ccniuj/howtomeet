@@ -8,7 +8,7 @@
     <%= f.input :location, :label => "所在地", :input_html => {:class => "form-control"} %></br>
     <%= f.input :day, as: :select, collection: [["星期一", 1], ["星期二", 2], ["星期三", 3], ["星期四", 4], ["星期五", 5], ["星期六", 6], ["星期日", 7]], promt: "請選擇例行日", include_blank: "請選擇例行日", :label => "例行日", :input_html => {:class => "form-control"} %></br>
     <%= f.input :called, :label => "參加者別稱", :input_html => {:class => "form-control"} %></br>
-    <%= f.input :cover, as: :file %>
+    <%= f.input :cover, :label => "封面圖片", as: :file %>
   </div>
   <%= f.submit "確定", :class => "btn btn-success" %>
 <% end %>
