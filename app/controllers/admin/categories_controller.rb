@@ -1,5 +1,6 @@
 class Admin::CategoriesController < ApplicationController
   before_action :set_admin_category, only: [:show, :edit, :update, :destroy]
+  before_action :check_authority
 
   # GET /admin/categories
   # GET /admin/categories.json
@@ -62,6 +63,13 @@ class Admin::CategoriesController < ApplicationController
   end
 
   private
+
+    def check_authority
+      unless current_user.is_admin == true
+        redirect_to root_path
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_category
       @admin_category = Category.find(params[:id])
