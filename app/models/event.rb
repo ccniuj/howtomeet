@@ -14,5 +14,9 @@ class Event < ActiveRecord::Base
   
   extend FriendlyId
   friendly_id :subject_en, use: :slugged
+
+  def is_owned?(user)
+    Attendee.where(event_id: self.id, user_id: user.id, is_owner: true).take ? true : false
+  end
   
 end
