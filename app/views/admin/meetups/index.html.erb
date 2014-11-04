@@ -43,8 +43,13 @@
                 <%= meetup.location %>
                 <%= meetup.weekday %>
               </p>
+              <% if current_user.id = 2 %>
               <p>
+                <%= link_to "活動", admin_meetup_events_path(meetup), class: "btn btn-default" %>
+                <%= link_to "編輯", edit_admin_meetup_path(meetup), class: "btn btn-default" %>
+                <%= link_to "刪除", admin_meetup_path(meetup), class: "btn btn-danger", method: "delete", data: {confirm: "確定要刪除?"} %> 
               </p>
+              <% end %>
             </div>
           <% end %>
         </div>

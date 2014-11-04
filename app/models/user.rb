@@ -27,8 +27,13 @@ class User < ActiveRecord::Base
            picture: data["image"].split('=')[0]+'=200',
            provider: access_token.provider,
            token: access_token.credentials.token,
-           password: Devise.friendly_token[0,20]
+           password: Devise.friendly_token[0,20], 
+           is_admin: false
         )
+        if user.uid == "howtomeettw"
+          binding.pry
+          user.update(:is_admin => true)
+        end
     else
       user.update(:token => access_token.credentials.token)
     end

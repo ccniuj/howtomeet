@@ -108,10 +108,16 @@ ActiveRecord::Schema.define(version: 20141101182808) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "uid"
-    t.string   "provider"
-    t.string   "token"
     t.string   "thumbnail"
     t.string   "picture"
+    t.string   "location"
+    t.string   "birthday"
+    t.string   "gender"
+    t.text     "bio"
+    t.string   "interest"
+    t.boolean  "is_admin"
+    t.string   "provider"
+    t.string   "token"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"

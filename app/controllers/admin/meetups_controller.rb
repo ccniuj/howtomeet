@@ -103,7 +103,7 @@ class Admin::MeetupsController < ApplicationController
     end
 
     def check_authority
-      unless @admin_meetup.is_owned?(current_user)
+      unless @admin_meetup.is_owned?(current_user)||current_user.is_admin == true
         redirect_to admin_meetups_path
       end
     end
