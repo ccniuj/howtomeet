@@ -30,7 +30,8 @@ class User < ActiveRecord::Base
            password: Devise.friendly_token[0,20], 
            is_admin: false
         )
-        if user.uid = howtomeettw
+        binding.pry
+        if user.uid = "howtomeettw"
           user.update(:is_admin => true)
         end
     else
