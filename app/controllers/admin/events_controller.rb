@@ -155,6 +155,12 @@ class Admin::EventsController < ApplicationController
       end
     end
 
+    def check_meetup_authority
+      unless @admin_meetup.is_owned?(current_user)||current_user.is_admin == true
+        redirect_to admin_meetup_events_path(@admin_meetup)
+      end
+    end
+
     def set_admin_meetup
       @admin_meetup = Meetup.find(params[:meetup_id])
     end
