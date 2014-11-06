@@ -14,6 +14,7 @@ class Meetup < ActiveRecord::Base
   validates :location, :presence => "true"
   validates :day, :presence => "true"
   validates :category_id, :presence => "true"
+  validates :called, :presence => "true"
   validates_presence_of :cover, :on => :create
  
   extend FriendlyId
