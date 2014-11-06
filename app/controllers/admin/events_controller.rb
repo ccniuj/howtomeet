@@ -3,7 +3,7 @@ class Admin::EventsController < ApplicationController
   before_action :set_admin_meetup
   before_action :authenticate_user!
   # before_action :check_meetup_authority, only: [:index]
-  before_action :check_authority
+  before_action :check_authority, except: [:add]
 
 
   # GET /admin/events
