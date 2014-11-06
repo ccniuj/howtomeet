@@ -43,7 +43,7 @@
                 <%= meetup.location %>
                 <%= meetup.weekday %>
               </p>
-              <% if current_user.id = 2 %>
+              <% if current_user.is_admin == true %>
               <p>
                 <%= link_to "活動", admin_meetup_events_path(meetup), class: "btn btn-default" %>
                 <%= link_to "編輯", edit_admin_meetup_path(meetup), class: "btn btn-default" %>
