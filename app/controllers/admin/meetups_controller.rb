@@ -99,7 +99,10 @@ class Admin::MeetupsController < ApplicationController
 
     def remove_meetup_member(meetup, user)
       MeetupMember.where(meetup_id: meetup.id, user_id: user.id).take.delete
-      meetup.events.each{ |event| Attendee.where(event_id: event.id, user_id: current_user.id).take.delete }
+      meetup.events.each{ |event| 
+        attendee = Attendee.where(event_id: event.id, user_id: current_user.id).take
+        attendee.delete if attendee
+      }
     end
 
     def check_authority
