@@ -35,6 +35,11 @@
     </div>
     <div id="member">
       <h3 class="text-center">成員</h3>
+      <% if @is_member.is_owner %>
+      <%= link_to "新增活動", new_admin_meetup_event_path(@meetup), class: "btn btn-primary pull-right" %>
+      <br/>
+      <br/>
+      <% end %>
       <% @members.each do |member| %>
         <%= link_to '/info/'+member.uid do %>
           <%= image_tag member.thumbnail %>
