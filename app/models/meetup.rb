@@ -1,5 +1,5 @@
 class Meetup < ActiveRecord::Base
-  belongs_to :meetable, polymorphic: true
+  belongs_to :meetable, polymorphic: true, dependent: :destroy
 
   has_many :meetup_members
   has_many :users, through: :meetup_members, dependent: :destroy
