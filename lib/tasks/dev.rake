@@ -3,6 +3,6 @@ namespace :dev do
   desc 'Generate test data'
   task :fake => :environment do
     puts 'this is a fake'
-    FactoryGirl.create(:category_with_meetup) 
+    FactoryGirl.create_list(:category_with_meetup, 3) 
   end
 end
