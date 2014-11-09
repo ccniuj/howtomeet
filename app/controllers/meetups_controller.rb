@@ -28,8 +28,8 @@ class MeetupsController < ApplicationController
     # binding.pry
     @categories = Category.all
 
-    category_id = params[:id].to_i
-    if category_id == 0
+    category_id = params[:id].to_s
+    if category_id == "all"
       @meetups = Meetup.all
     else
       @meetups = Meetup.where(category_id: params[:id])
