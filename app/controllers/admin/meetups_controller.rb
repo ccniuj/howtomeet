@@ -8,8 +8,11 @@ class Admin::MeetupsController < ApplicationController
   def index
     @admin_meetups_owner = current_user.meetups.map{ |anchor|
       anchor if anchor.is_owned?(current_user) }.compact
+    @owner_counts = @admin_meetups_owner.map(&:users).map(&:count)
+
     @admin_meetups_member = current_user.meetups.map{ |anchor|
       anchor unless anchor.is_owned?(current_user) }.compact
+    @member_counts = @admin_meetups_member.map(&:users).map(&:count)
   end
 
   # GET /admin/meetups/1

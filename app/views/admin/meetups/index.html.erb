@@ -5,17 +5,18 @@
     <h3 class="text-center">我發起的聚會</h3>
     <%= link_to "新增聚會", new_admin_meetup_path, class: "btn btn-primary pull-right" %>
     <br/><br/>
-    <% @admin_meetups_owner.each do |meetup| %>
+    <% @admin_meetups_owner.each_with_index do |meetup, index| %>
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
           <%= link_to meetup_path(meetup) do %>
             <%= image_tag meetup.cover.url %>
             <div class="caption">
               <h3><%= meetup.title %></h3>
-              <p><%= meetup.subtitle %></p>
+              <p style="height: 30px;"><%= meetup.subtitle %></p>
               <p>
                 <%= meetup.location %>
                 <%= meetup.weekday %>
+                <%= @owner_counts[index].to_s + "名" + meetup.called %>
               </p>
               <p>
                 <%= link_to "活動", admin_meetup_events_path(meetup), class: "btn btn-default" %>
@@ -31,17 +32,18 @@
   <div class="col-md-offset-1 col-md-10">
     <h3 class="text-center">我加入的聚會</h3>
     <br/><br/>
-    <% @admin_meetups_member.each do |meetup| %>
+    <% @admin_meetups_member.each_with_index do |meetup, index| %>
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
           <%= link_to meetup_path(meetup) do %>
             <%= image_tag meetup.cover.url %>
             <div class="caption">
               <h3><%= meetup.title %></h3>
-              <p><%= meetup.subtitle %></p>
+              <p style="height:30px;"><%= meetup.subtitle %></p>
               <p>
                 <%= meetup.location %>
                 <%= meetup.weekday %>
+                <%= @member_counts[index].to_s + "名" + meetup.called %>
               </p>
               <% if current_user.is_admin == true %>
               <p>

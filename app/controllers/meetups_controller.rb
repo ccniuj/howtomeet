@@ -36,7 +36,6 @@ class MeetupsController < ApplicationController
     end
     @member_counts = @meetups.map(&:users).map(&:count)
 
-
   end
 
   # POST /meetups
