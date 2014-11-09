@@ -32,9 +32,11 @@ class MeetupsController < ApplicationController
     if category_id == "all"
       @meetups = Meetup.all
     else
-      @meetups = Meetup.where(category_id: params[:id])
+      @meetups = Meetup.where(category_id: Category.find(category_id).id)
     end
     @member_counts = @meetups.map(&:users).map(&:count)
+
+
   end
 
   # POST /meetups

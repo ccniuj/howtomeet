@@ -31,7 +31,6 @@ class User < ActiveRecord::Base
            is_admin: false
         )
         if user.uid == "howtomeettw"
-          binding.pry
           user.update(:is_admin => true)
         end
     else

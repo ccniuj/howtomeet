@@ -56,6 +56,8 @@ gem 'babosa'
 gem 'unicorn'
 gem 'rack-timeout'
 
-gem 'factory_girl_rails'
-gem 'rspec-rails'
-gem 'faker'
+group :development, :test do
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem 'faker'
+end
