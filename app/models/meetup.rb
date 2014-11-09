@@ -24,6 +24,10 @@ class Meetup < ActiveRecord::Base
     MeetupMember.where(meetup_id: self.id, user_id: user.id, is_owner: true).take ? true : false
   end
 
+  def is_member?(user)
+    MeetupMember.where(meetup_id: self.id, user_id: user.id, is_owner: false).take ? true : false
+  end
+
   def weekday
     case self.day
     when 1 
