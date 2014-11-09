@@ -11,6 +11,7 @@ class Event < ActiveRecord::Base
   validates :place, :presence => "true"
   validates :date, :presence => "true"
   validates :price, :presence => "true"
+  validates :size, :presence => "true"
   
   extend FriendlyId
   friendly_id :subject_en, use: :slugged

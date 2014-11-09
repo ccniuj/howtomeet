@@ -7,6 +7,7 @@ FactoryGirl.define do
     date {Faker::Time.forward(7, :morning)}
     place {Faker::Address.street_name}
     price {50 + Random.rand(100)}
+    size {10 + Random.rand(20)}
     created_at {Faker::Time.between(2.days.ago, Time.now, :morning)}
     updated_at {Faker::Time.between(2.days.ago, Time.now, :afternoon)}
 

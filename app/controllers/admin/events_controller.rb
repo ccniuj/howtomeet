@@ -118,7 +118,7 @@ class Admin::EventsController < ApplicationController
       # redirect_to meetup_event_path(meetup, event)
       redirect_to user_omniauth_authorize_path(:google_oauth2)
     else
-      @admin_event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
+      @admin_event.notes.create(file_id: upload_result.data.id, view_link: upload_result.data.embedLink, edit_link: upload_result.data.alternateLink)
       redirect_to meetup_event_path(@admin_meetup, @admin_event)
     end
   end
@@ -142,7 +142,7 @@ class Admin::EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_event_params
-      params[:event].permit(:subject, :subject_en, :content, :date, :place, :price)
+      params[:event].permit(:subject, :subject_en, :content, :date, :place, :price, :size)
     end
     
 end
