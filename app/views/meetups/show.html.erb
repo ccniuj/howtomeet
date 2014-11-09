@@ -10,15 +10,11 @@
       <a href="#event" class="btn btn-default">活動</a>
       <a href="#photo" class="btn btn-default">照片</a>
       
-      <% if current_user %>
-        <% if @meetup.is_owned?(current_user) %>
-          <span class="pull-right">您是此聚會發起人</span>
-        <% elsif @meetup.is_member?(current_user) %>
-          <%= link_to "退出聚會", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
-          <span class="pull-right">您已加入此聚會</span>
-        <% else %>
-          <%= link_to "加入聚會", add_admin_meetup_path(@meetup), class: "btn btn-primary pull-right" %>
-        <% end %>
+      <% if current_user&&@meetup.is_owned?(current_user) %>
+        <span class="pull-right">您是此聚會發起人</span>
+      <% elsif current_user&&@meetup.is_member?(current_user) %>
+        <%= link_to "退出聚會", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
+        <span class="pull-right">您已加入此聚會</span>
       <% else %>
         <%= link_to "加入聚會", add_admin_meetup_path(@meetup), class: "btn btn-primary pull-right" %>
       <% end %>
@@ -60,7 +56,7 @@
                   <%= event.date.strftime('%Y/%m/%d %H:%M') %><br/>
                   <%= event.place %>
                   <%= event.price %>
-                  <%= event.size %>個名額
+                  <%= event.available %>個名額
                 </p>
               </div>
             <% end %>

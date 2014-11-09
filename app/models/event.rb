@@ -24,6 +24,10 @@ class Event < ActiveRecord::Base
     Attendee.where(event_id: self.id, user_id: user.id).take ? true : false
   end
 
+  def available
+    self.size - self.users.count
+  end
+
   def create_attendee(user)
     Attendee.create(event_id: self.id, user_id: user.id, is_owner: true)
     unless MeetupMember.where(meetup_id: self.meetup.id, user_id: user.id).take

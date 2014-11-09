@@ -6,7 +6,7 @@
       <%= @event.date.strftime('%Y/%m/%d %H:%M') %>&nbsp;
       <%= @event.place %>&nbsp;
       <%= @event.price %>&nbsp;
-      <%= @event.size %>個名額
+      <%= @event.available %>個名額
     </div>
     <br/>
     <br/>
@@ -16,18 +16,19 @@
       <a href="#note" class="btn btn-default">筆記</a>
       <a href="#photo" class="btn btn-default">照片</a>
     
-      <% if current_user %>
-        <% if @event.is_owned?(current_user) %>
-          <span class="pull-right">您是此活動召集人</span>
-        <% elsif @event.is_attendee?(current_user) %>
-          <%= link_to "退出活動", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
-          <span class="pull-right">您已參加此活動</span>
-        <% else %>
-          <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
-        <% end %>
+      <% if current_user&&@event.is_owned?(current_user) %>
+        <span class="pull-right">您是此活動召集人</span>
+      <% elsif current_user&&@event.is_attendee?(current_user) %>
+        <%= link_to "退出活動", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
+        <span class="pull-right">您已參加此活動</span>
       <% else %>
-        <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
+        <% if @event.available > 0 %>
+          <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
+        <% else %>
+          已額滿
+        <% end %>
       <% end %>
+
     </div>
     <br/>
     <br/>
