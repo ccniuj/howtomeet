@@ -10,57 +10,57 @@
     </div>
     <br/>
     <br/>
-    <div class="col-md-offset-2 col-md-8">
+    <div class="col-md-offset-1 col-md-10">
       <a href="#about" class="btn btn-default">簡介</a>
       <a href="#attendee" class="btn btn-default">參與者</a>
       <a href="#note" class="btn btn-default">筆記</a>
       <a href="#photo" class="btn btn-default">照片</a>
     
       <% if current_user&&@event.is_owned?(current_user) %>
-        <span class="pull-right">您是此活動召集人</span>
+        <span class="pull-right" style="margin: 8px;">您是此活動召集人</span>
       <% elsif current_user&&@event.is_attendee?(current_user) %>
         <%= link_to "退出活動", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
-        <span class="pull-right">您已參加此活動</span>
+        <span class="pull-right" style="margin: 8px;">您已參加此活動</span>
       <% else %>
         <% if @event.available > 0 %>
           <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
         <% else %>
-          <span class="pull-right">此活動已額滿</span>
+          <span class="pull-right" style="margin: 8px;">此活動已額滿</span>
         <% end %>
       <% end %>
 
-    </div>
-    <br/>
-    <br/>
-    <div id="about">
-      <h3 class="text-center">簡介</h3>
-      <p>
-        <%= @event.content %>
-      </p>
-    </div>
-    <div id="attendee">
-      <h3 class="text-center">參與者</h3>
-      <% @attendees.each do |attendee| %>
-        <%= link_to '/info/'+attendee.uid do %>
-          <%= image_tag attendee.thumbnail %>
+      <br/>
+      <br/>
+      <div id="about">
+        <h3 class="text-center">簡介</h3>
+        <p>
+          <%= @event.content %>
+        </p>
+      </div>
+      <div id="attendee">
+        <h3 class="text-center">參與者</h3>
+        <% @attendees.each do |attendee| %>
+          <%= link_to '/info/'+attendee.uid do %>
+            <%= image_tag attendee.thumbnail %>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <div id="note">
-      <h3 class="text-center">筆記</h3>
-      <% if @note %>
-        <% if current_user&&@event.is_attendee?(current_user) %>
-          <%= link_to "編輯", @note.edit_link, class: "btn btn-primary" %>
+      </div>
+      <div id="note">
+        <h3 class="text-center">筆記</h3>
+        <% if @note %>
+          <% if current_user&&@event.is_attendee?(current_user) %>
+            <%= link_to "編輯", @note.edit_link, class: "btn btn-primary" %>
+          <% end %>
+          <iframe width="100%" height="600px" src="<%= @note.view_link %>" sandbox="allow-scripts allow-forms allow-same-origin" ></iframe>
+        <% else %>
+          <% if current_user&&@event.is_owned?(current_user) %>
+            <%= link_to "建立筆記", open_new_file_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary" %>
+          <% end %>
         <% end %>
-        <iframe width="100%" height="600px" src="<%= @note.view_link %>" sandbox="allow-scripts allow-forms allow-same-origin" ></iframe>
-      <% else %>
-        <% if current_user&&@event.is_owned?(current_user) %>
-          <%= link_to "建立筆記", open_new_file_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary" %>
-        <% end %>
-      <% end %>
-    </div>
-    <div id="photo">
-      <h3 class="text-center">照片</h3>
+      </div>
+      <div id="photo">
+        <h3 class="text-center">照片</h3>
+      </div>
     </div>
   </div>
 </div>

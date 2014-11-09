@@ -5,7 +5,7 @@ FactoryGirl.define do
     title_en {Faker::Hacker.adjective}
     subtitle {Faker::Lorem.sentence}
     description {Faker::Lorem.paragraph}
-    day {Random.rand(7)}
+    day {1+Random.rand(7)}
     location {Faker::Address.city}
     called {Faker::Hacker.noun}
     cover { Rack::Test::UploadedFile.new(File.join(Rails.root, 'cover.jpg')) }
