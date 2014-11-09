@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :category do
     title {Faker::Hacker.adjective}
+    title_en {Faker::Hacker.adjective}
 
     factory :category_with_meetup do
       after(:create) do |category|
