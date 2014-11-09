@@ -2,7 +2,6 @@ class Admin::EventsController < ApplicationController
   before_action :set_admin_event, only: [:show, :edit, :update, :destroy, :add, :remove, :open_new_file]
   before_action :set_admin_meetup
   before_action :authenticate_user!
-  # before_action :check_meetup_authority, only: [:index]
   before_action :check_authority, except: [:add]
 
 
@@ -33,7 +32,7 @@ class Admin::EventsController < ApplicationController
 
     respond_to do |format|
       if @admin_event.save
-        create_attendee(@admin_event, current_user)
+        @admin_event.create_attendee(current_user)
         format.html { redirect_to [@admin_meetup, @admin_event], notice: '成功新增活動' }
         format.json { render :show, status: :created, location: @admin_event }
       else
@@ -68,24 +67,21 @@ class Admin::EventsController < ApplicationController
   end
 
   def add
-    unless Attendee.where(event_id: @admin_event.id, user_id: current_user.id).take
-      add_attendee(@admin_event, current_user)
+    unless @admin_event.is_attendee?(current_user)
+      @admin_event.add_attendee(current_user)
       flash['notice']="成功加入此活動"
     end
     redirect_to meetup_event_path(@admin_meetup, @admin_event)
   end
 
   def remove
-    remove_attendee(@admin_event, current_user)
+    @admin_event.remove_attendee(current_user)
     flash['notice']="成功加入此活動"
     redirect_to meetup_event_path(@admin_meetup, @admin_event)
   end
 
   def open_new_file
     require 'google/api_client'
-
-    meetup = Meetup.find(params[:meetup_id])
-    event = Event.find(params[:id])
     
     client = Google::APIClient.new(:application_name => 'howtomeet', :application_version => '1.0.0')
     drive = client.discovered_api('drive', 'v2')
@@ -93,8 +89,8 @@ class Admin::EventsController < ApplicationController
 
     # Insert a file
     file = drive.files.insert.request_schema.new({
-      'title' => meetup.title + '-' + event.subject,
-      'description' => meetup.title + '的活動',
+      'title' => @admin_meetup.title + '-' + @admin_event.subject,
+      'description' => @admin_meetup.title + '的活動',
       'mimeType' => 'application/vnd.google-apps.document'
     })
     
@@ -122,30 +118,13 @@ class Admin::EventsController < ApplicationController
       # redirect_to meetup_event_path(meetup, event)
       redirect_to user_omniauth_authorize_path(:google_oauth2)
     else
-      event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
-      redirect_to meetup_event_path(meetup, event)
+      @admin_event.notes.create(file_id: upload_result.data.id, link: upload_result.data.alternateLink)
+      redirect_to meetup_event_path(@admin_meetup, @admin_event)
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def create_attendee(event, user)
-      Attendee.create(event_id: event.id, user_id: user.id, is_owner: true)
-      unless MeetupMember.where(meetup_id: event.meetup.id, user_id: user.id).take
-        MeetupMember.create(meetup_id: event.meetup.id, user_id: user.id, is_owner: false)
-      end
-    end
-
-    def add_attendee(event, user)
-      Attendee.create(event_id: event.id, user_id: user.id, is_owner: false)
-      unless MeetupMember.where(meetup_id: event.meetup.id, user_id: user.id).take
-        MeetupMember.create(meetup_id: event.meetup.id, user_id: user.id, is_owner: false)
-      end
-    end
-
-    def remove_attendee(event, user)
-      Attendee.where(event_id: event.id, user_id: user.id).take.delete
-    end
 
     def set_admin_event
       @admin_event = Event.find(params[:id])
@@ -157,12 +136,6 @@ class Admin::EventsController < ApplicationController
       end
     end
 
-    # def check_meetup_authority
-    #   unless @admin_meetup.is_owned?(current_user)||current_user.is_admin == true
-    #     redirect_to admin_meetups_path
-    #   end
-    # end
-
     def set_admin_meetup
       @admin_meetup = Meetup.find(params[:meetup_id])
     end
@@ -171,6 +144,5 @@ class Admin::EventsController < ApplicationController
     def admin_event_params
       params[:event].permit(:subject, :subject_en, :content, :date, :place, :price)
     end
-
     
 end
