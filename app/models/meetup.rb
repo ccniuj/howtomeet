@@ -1,5 +1,5 @@
 class Meetup < ActiveRecord::Base
-  belongs_to :meetable, polymorphic: true
+  belongs_to :meetable, polymorphic: true, dependent: :destroy
 
   has_many :meetup_members
   has_many :users, through: :meetup_members, dependent: :destroy
@@ -22,6 +22,26 @@ class Meetup < ActiveRecord::Base
 
   def is_owned?(user)
     MeetupMember.where(meetup_id: self.id, user_id: user.id, is_owner: true).take ? true : false
+  end
+
+  def is_member?(user)
+    MeetupMember.where(meetup_id: self.id, user_id: user.id).take ? true : false
+  end
+
+  def create_member(user)
+    MeetupMember.create(meetup_id: self.id, user_id: user.id, is_owner: true)
+  end
+
+  def add_member(user)
+    MeetupMember.create(meetup_id: self.id, user_id: user.id, is_owner: false)
+  end
+
+  def remove_member(user)
+    MeetupMember.where(meetup_id: self.id, user_id: user.id).take.delete
+    self.events.each{ |event| 
+      attendee = Attendee.where(event_id: event.id, user_id: user.id).take
+      attendee.delete if attendee
+    }
   end
 
   def weekday

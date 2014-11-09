@@ -9,6 +9,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :place
       t.string :price
       t.integer :score
+      t.integer :size
       t.timestamps
     end
   end

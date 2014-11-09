@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20141101182808) do
     t.string   "place"
     t.string   "price"
     t.integer  "score"
+    t.integer  "size"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
@@ -92,7 +93,8 @@ ActiveRecord::Schema.define(version: 20141101182808) do
   create_table "notes", force: true do |t|
     t.integer  "event_id"
     t.string   "file_id"
-    t.string   "link"
+    t.string   "view_link"
+    t.string   "edit_link"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

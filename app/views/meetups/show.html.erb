@@ -4,69 +4,69 @@
     <%= image_tag @meetup.cover.url, style: "width: 100%;" %>
     <br/>
     <br/>
-    <div class="col-md-offset-2 col-md-8">
+    <div class="col-md-offset-1 col-md-10">
       <a href="#about" class="btn btn-default">簡介</a>
       <a href="#member" class="btn btn-default">成員</a>
       <a href="#event" class="btn btn-default">活動</a>
       <a href="#photo" class="btn btn-default">照片</a>
       
-      <% if @is_member&&current_user %>
-        <% if @is_member.is_owner %>
-          <span class="pull-right">您是此聚會發起人</span>
-        <% else %>
-          <%= link_to "退出聚會", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
-          <span class="pull-right">您已加入此聚會</span>
-        <% end %>
+      <% if current_user&&@meetup.is_owned?(current_user) %>
+        <span class="pull-right" style="margin: 8px;">您是此聚會發起人</span>
+      <% elsif current_user&&@meetup.is_member?(current_user) %>
+        <%= link_to "退出聚會", remove_admin_meetup_path(@meetup), class: "btn btn-danger pull-right" %>
+        <span class="pull-right" style="margin: 8px;">您已加入此聚會</span>
       <% else %>
         <%= link_to "加入聚會", add_admin_meetup_path(@meetup), class: "btn btn-primary pull-right" %>
       <% end %>
       
-      <span class="pull-right"><%= @meetup.weekday %>&nbsp;</span>
-      <span class="pull-right"><%= @meetup.location %>&nbsp;</span>
-    </div>  
-    <br/>
-    <br/>
-    <br/>
-    <div id="about">
-      <h3 class="text-center">簡介</h3>
-      <p>
-        <%= @meetup.description %><br/>
-      </p>
-    </div>
-    <div id="member">
-      <h3 class="text-center">成員</h3>
-      <% if current_user&&@is_member.is_owner %>
-        <%= link_to "新增活動", new_admin_meetup_event_path(@meetup), class: "btn btn-primary pull-right" %>
+      <span class="pull-right" style="margin-top: 8px;"><%= @meetup.weekday %>&nbsp;</span>
+      <span class="pull-right" style="margin-top: 8px;"><%= @meetup.location %>&nbsp;</span>
       <br/>
       <br/>
-      <% end %>
-      <% @members.each do |member| %>
-        <%= link_to '/info/'+member.uid do %>
-          <%= image_tag member.thumbnail %>
+      <br/>
+      <div id="about">
+        <h3 class="text-center">簡介</h3>
+        <p>
+          <%= sanitize @meetup.description %><br/>
+        </p>
+      </div>
+      <div id="member">
+        <h3 class="text-center">成員</h3>
+        <% if current_user&&@meetup.is_owned?(current_user) %>
+          <%= link_to "新增活動", new_admin_meetup_event_path(@meetup), class: "btn btn-primary pull-right" %>
+        <br/>
+        <br/>
         <% end %>
-      <% end %>
-    </div>
-    <div id="event" class="col-md-12" style="padding: 0px;">
-      <h3 class="text-center">活動</h3>
-      <% @events.each do |event| %>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <%= link_to meetup_event_path(@meetup, event) do %>
-              <div class="caption">
-                <h3><%= event.subject %></h3>
-                <p>
-                  <%= event.date.strftime('%Y/%m/%d %H:%M') %><br/>
-                  <%= event.place %>
-                  <%= event.price %>
-                </p>
-              </div>
-            <% end %>
+        <% @members.each do |member| %>
+          <%= link_to '/info/'+member.uid do %>
+            <%= image_tag member.thumbnail %>
+          <% end %>
+        <% end %>
+      </div>
+      <div id="event" class="col-md-12" style="padding: 0px;">
+        <h3 class="text-center">活動</h3>
+        <% @events.each do |event| %>
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <%= link_to meetup_event_path(@meetup, event) do %>
+                <div class="caption">
+                  <h3><%= event.subject %></h3>
+                  <p>
+                    <%= event.date.strftime('%Y/%m/%d %H:%M') %><br/>
+                    <%= event.place %>
+                    <%= event.price %><br/>
+                    <%= event.available %>個名額
+                  </p>
+                </div>
+              <% end %>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-    <div id="photo">
-      <h3 class="text-center">照片</h3>
-    </div>
+        <% end %>
+      </div>
+      <div id="photo">
+        <h3 class="text-center">照片</h3>
+      </div>
+    </div>  
+
   </div>
 </div>

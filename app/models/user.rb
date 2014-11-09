@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
         user = User.create(
            name: data["name"],
            email: data["email"],
-           uid: data["email"].split('@')[0],
+           uid: data["email"].split('@')[0].split('.')[0].to_s + data["email"].split('@')[0].split('.')[1].to_s,
            thumbnail: data["image"],
            picture: data["image"].split('=')[0]+'=200',
            provider: access_token.provider,

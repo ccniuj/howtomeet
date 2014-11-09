@@ -55,3 +55,9 @@ gem 'friendly_id'
 gem 'babosa'
 gem 'unicorn'
 gem 'rack-timeout'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'faker'
+end
