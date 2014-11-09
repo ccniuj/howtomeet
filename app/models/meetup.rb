@@ -25,7 +25,23 @@ class Meetup < ActiveRecord::Base
   end
 
   def is_member?(user)
-    MeetupMember.where(meetup_id: self.id, user_id: user.id, is_owner: false).take ? true : false
+    MeetupMember.where(meetup_id: self.id, user_id: user.id).take ? true : false
+  end
+
+  def create_member(user)
+    MeetupMember.create(meetup_id: self.id, user_id: user.id, is_owner: true)
+  end
+
+  def add_member(user)
+    MeetupMember.create(meetup_id: self.id, user_id: user.id, is_owner: false)
+  end
+
+  def remove_member(user)
+    MeetupMember.where(meetup_id: self.id, user_id: user.id).take.delete
+    self.events.each{ |event| 
+      attendee = Attendee.where(event_id: event.id, user_id: user.id).take
+      attendee.delete if attendee
+    }
   end
 
   def weekday
