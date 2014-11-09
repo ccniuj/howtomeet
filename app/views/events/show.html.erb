@@ -25,7 +25,7 @@
         <% if @event.available > 0 %>
           <%= link_to "參加活動", add_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary pull-right" %>
         <% else %>
-          已額滿
+          <span class="pull-right">此活動已額滿</span>
         <% end %>
       <% end %>
 
