@@ -3,15 +3,15 @@ FactoryGirl.define do
     email {Faker::Internet.email}
     password {Faker::Internet.password(8)}
     name {Faker::Name.name}
-    uid {Faker::Name.first_name}
+    uid {Faker::Internet.user_name.split('.')[0]}
     thumbnail Faker::Avatar.image("user", "50x50")
     picture Faker::Avatar.image("user", "200x200")
+    is_admin false
     # location
     # birthday
     # gender
     # bio
     # interest
-    is_admin false
     # provider
     # token
     created_at Faker::Time.between(2.days.ago, Time.now, :morning)
