@@ -25,7 +25,6 @@ class MeetupsController < ApplicationController
   end
 
   def find
-    # binding.pry
     @categories = Category.all
 
     category_id = params[:id].to_s
@@ -34,7 +33,6 @@ class MeetupsController < ApplicationController
     else
       @meetups = Meetup.where(category_id: Category.find(category_id).id)
     end
-    @member_counts = @meetups.map(&:users).map(&:count)
 
   end
 

@@ -20,6 +20,10 @@ class Meetup < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title_en, use: :slugged
 
+  def total
+    self.users.count
+  end
+
   def is_owned?(user)
     MeetupMember.where(meetup_id: self.id, user_id: user.id, is_owner: true).take ? true : false
   end

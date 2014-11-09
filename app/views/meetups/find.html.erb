@@ -4,7 +4,7 @@
   <br/>
   <br/>
   <div class="col-md-offset-1 col-md-10">
-    <% @meetups.each_with_index do |meetup, index| %>
+    <% @meetups.each do |meetup| %>
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
           <%= link_to meetup_path(meetup) do %>
@@ -15,7 +15,7 @@
               <p>
                 <%= meetup.location %>
                 <%= meetup.weekday %>
-                <%= @member_counts[index].to_s + "名" + meetup.called %>
+                <%= meetup.total.to_s + "名" + meetup.called %>
               </p>
             </div>
           <% end %>
