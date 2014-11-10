@@ -34,7 +34,7 @@
       <div id="about">
         <h3 class="text-center">簡介</h3>
         <p>
-          <%= @event.content %>
+          <%= sanitize @event.content %>
         </p>
       </div>
       <div id="attendee">
