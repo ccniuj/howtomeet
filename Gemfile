@@ -59,3 +59,5 @@ gem 'rack-timeout'
 gem 'factory_girl_rails'
 gem 'rspec-rails'
 gem 'faker'
+
+gem 'ckeditor_rails'

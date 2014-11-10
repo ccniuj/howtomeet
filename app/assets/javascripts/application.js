@@ -17,4 +17,5 @@
 //= require bootstrap/alert
 //= require bootstrap/carousel
 //= require bootstrap/transition
+//= require ckeditor-jquery
 //= require_tree .
