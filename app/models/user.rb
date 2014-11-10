@@ -42,4 +42,7 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :uid, use: :slugged
   
+  def should_generate_new_friendly_id?
+    uid_changed?
+  end
 end
