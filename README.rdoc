@@ -1,1 +1,13 @@
 A web service 
+
+fix:
+> validation on number of input words
+
+feature to be done:
+> photo
+> review
+> comment
+> SEO
+> event notice email
+> integrate fb?
+> upload pdf
