@@ -1,8 +1,8 @@
 <% content_for :head do %>
   <meta property="og:image" content="<%= @meetup.cover.url %>" >
-  <meta property="og:url" content="http://www.adjudge.com" /> 
-  <meta property="og:title" content="Ads Worth Spreading" />
-  <meta property="og:description" content="Ad Judge" />
+  <meta property="og:url" content="http://howtomeet.herokuapp.com" /> 
+  <meta property="og:title" content="<%= @meetup.title %>" />
+  <meta property="og:description" content="<%= @meetup.description %>" />
 <% end %>
 
 <h1 class="text-center"><%= @meetup.title %></h1>
