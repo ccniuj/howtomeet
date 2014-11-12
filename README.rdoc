@@ -11,3 +11,4 @@ feature to be done:
 > event notice email
 > integrate fb?
 > upload pdf
+> user profile
