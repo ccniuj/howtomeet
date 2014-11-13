@@ -1,5 +1,5 @@
 class Admin::EventsController < ApplicationController
-  before_action :set_admin_event, only: [:show, :edit, :update, :destroy, :add, :remove, :open_new_file]
+  before_action :set_admin_event, only: [:show, :edit, :update, :destroy, :add, :remove, :open_new_file, :open_new_pad]
   before_action :set_admin_meetup
   before_action :authenticate_user!
   before_action :check_authority, except: [:add]
@@ -120,6 +120,20 @@ class Admin::EventsController < ApplicationController
     else
       @admin_event.notes.create(file_id: upload_result.data.id, view_link: upload_result.data.embedLink, edit_link: upload_result.data.alternateLink)
       redirect_to meetup_event_path(@admin_meetup, @admin_event)
+    end
+  end
+
+  def open_new_pad
+    content = 'helloworld!'
+    res = hackpad.request :post, "/api/1.0/pad/create", nil, {}, content, { 'Content-Type' => 'text/plain' }
+
+    if res.is_a? Net::HTTPSuccess
+      json = ActiveSupport::JSON.decode res.body
+      redirect_to pad_path json['padId']
+    else
+      binding.pry
+      logger.warn "#{res.inspect}: #{res.body}"
+      head :bad_request
     end
   end
 

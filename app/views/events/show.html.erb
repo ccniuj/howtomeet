@@ -62,6 +62,7 @@
         <% else %>
           <% if current_user&&@event.is_owned?(current_user) %>
             <%= link_to "建立筆記", open_new_file_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary" %>
+            <%= link_to "建立pad", open_new_pad_admin_meetup_event_path(@meetup, @event), class: "btn btn-primary" %>
           <% end %>
         <% end %>
       </div>
