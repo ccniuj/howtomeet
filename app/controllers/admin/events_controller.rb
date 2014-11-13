@@ -131,7 +131,6 @@ class Admin::EventsController < ApplicationController
       json = ActiveSupport::JSON.decode res.body
       redirect_to pad_path json['padId']
     else
-      binding.pry
       logger.warn "#{res.inspect}: #{res.body}"
       head :bad_request
     end
