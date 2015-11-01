@@ -418,7 +418,6 @@ DEPENDENCIES
   google-api-client
   jbuilder (~> 2.0)
   jquery-rails
-  oauth
   omniauth-google-oauth2
   omniauth-oauth2 (~> 1.3.1)
   pg
