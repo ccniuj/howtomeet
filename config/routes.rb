@@ -26,6 +26,7 @@ Rails.application.routes.draw do
         get 'add', on: :member
         get 'remove', on: :member
         get 'open_new_file', on: :member
+        get 'open_new_pad', on: :member
       end
     end
     resources :notes
