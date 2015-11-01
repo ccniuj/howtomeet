@@ -6,6 +6,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # config.secret_key = '4bb2bdc8a2aa2481660091c9657908389701f9b11199b199936766a94ef94a1ff739ada775c617c1fe0f61c90ead1ab6c63df426bb3e3e8076bc035cd89a7d0f'
 
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
   config.omniauth :google_oauth2, 
     ENV['GOOGLE_OAUTH2_CLIENT_ID'],
     ENV['GOOGLE_OAUTH2_CLIENT_SECRET'], {
@@ -262,4 +263,5 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+
 end

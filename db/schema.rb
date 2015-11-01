@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "attendees", force: true do |t|
+  create_table "attendees", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "user_id"
     t.boolean  "is_owner"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
     t.datetime "updated_at"
   end
 
-  create_table "categories", force: true do |t|
+  create_table "categories", force: :cascade do |t|
     t.string   "title"
     t.string   "title_en"
     t.datetime "created_at"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
 
   add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
-  create_table "events", force: true do |t|
+  create_table "events", force: :cascade do |t|
     t.integer  "meetup_id"
     t.string   "subject"
     t.string   "subject_en"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
 
   add_index "events", ["slug"], name: "index_events_on_slug", unique: true, using: :btree
 
-  create_table "friendly_id_slugs", force: true do |t|
+  create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
     t.string   "sluggable_type", limit: 50
@@ -64,12 +64,12 @@ ActiveRecord::Schema.define(version: 20141109132529) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "images", force: true do |t|
+  create_table "images", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "meetup_members", force: true do |t|
+  create_table "meetup_members", force: :cascade do |t|
     t.integer  "meetup_id"
     t.integer  "user_id"
     t.boolean  "is_owner"
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
     t.datetime "updated_at"
   end
 
-  create_table "meetups", force: true do |t|
+  create_table "meetups", force: :cascade do |t|
     t.integer  "category_id"
     t.string   "title"
     t.string   "title_en"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
 
   add_index "meetups", ["slug"], name: "index_meetups_on_slug", unique: true, using: :btree
 
-  create_table "notes", force: true do |t|
+  create_table "notes", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "file_id"
     t.string   "view_link"
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
     t.datetime "updated_at"
   end
 
-  create_table "reviews", force: true do |t|
+  create_table "reviews", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "meetup_id"
     t.string   "content"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20141109132529) do
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "uid"
     t.string   "thumbnail"
