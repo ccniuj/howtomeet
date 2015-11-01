@@ -5,6 +5,7 @@ Devise.setup do |config|
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # config.secret_key = '4bb2bdc8a2aa2481660091c9657908389701f9b11199b199936766a94ef94a1ff739ada775c617c1fe0f61c90ead1ab6c63df426bb3e3e8076bc035cd89a7d0f'
+  require 'omniauth-google-oauth2'
 
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
   config.omniauth :google_oauth2, 
