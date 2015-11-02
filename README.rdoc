@@ -1,15 +1,5 @@
-A web service 
+An app that allows people to build meetups and share those with friends.
 
-fix:
-> validation on number of input words
-
-feature to be done:
-> photo
-> review
-> comment
-> SEO
-> event notice email
-> integrate fb?
-> upload pdf
-> user profile
-> create meetup 
+1) Build authenticating system which allows users using google account to sign-in
+2) Design database structure systematically via block diagram
+3) Embed Google services via API
